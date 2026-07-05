@@ -32,7 +32,7 @@ internal class AndroidCancelableSubscription(private val onCancel: () -> Unit) :
 internal class AndroidAuthBridge(
     private val context: Context,
     private val firebaseAuth: FirebaseAuth
-) : NativeAuthBridge {
+) : NativeAuthBridgeDelegate {
 
     override fun signIn(
         email: String,
@@ -147,28 +147,6 @@ internal class AndroidAuthBridge(
                     completion(mapFirebaseException(ex))
                 }
             }
-    }
-
-    override fun signInWithGoogle(completion: (NativeAuthResult?, Throwable?) -> Unit) {
-        android.util.Log.d("AndroidAuthBridge", "signInWithGoogle: Google authentication flow initiated")
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                android.util.Log.d("AndroidAuthBridge", "signInWithGoogle: Launching GoogleSignInActivity launcher...")
-                val idToken = GoogleSignInActivity.launch(context).await()
-                android.util.Log.i("AndroidAuthBridge", "signInWithGoogle: Google ID Token obtained successfully. Submitting to Firebase Auth...")
-                signInWithCredential(AuthProvider.GOOGLE, idToken, null) { result, error ->
-                    if (error != null) {
-                        android.util.Log.e("AndroidAuthBridge", "signInWithGoogle: Firebase sign-in failed: ${error.message}", error)
-                    } else {
-                        android.util.Log.i("AndroidAuthBridge", "signInWithGoogle: Firebase sign-in successful! User UID: ${result?.user?.uid}")
-                    }
-                    completion(result, error)
-                }
-            } catch (e: Exception) {
-                android.util.Log.e("AndroidAuthBridge", "signInWithGoogle: Google sign-in flow failed: ${e.message}", e)
-                completion(null, e)
-            }
-        }
     }
 
     private fun mapFirebaseException(exception: Exception): Throwable {

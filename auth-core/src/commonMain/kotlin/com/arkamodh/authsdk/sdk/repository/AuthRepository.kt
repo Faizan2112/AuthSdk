@@ -17,5 +17,4 @@ public interface AuthRepository {
     public fun getCurrentUser(): AuthUser?
     public val authStateFlow: Flow<AuthUser?>
     public suspend fun sendPasswordResetEmail(email: String)
-    public suspend fun signInWithGoogle(): AuthResult
 }

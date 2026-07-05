@@ -8,7 +8,8 @@ import com.arkamodh.authsdk.sdk.usecase.*
 /**
  * Internal dependency injection container. Holds all the singletons of the SDK core.
  */
-internal class SdkContainer(bridge: NativeAuthBridge) {
+internal class SdkContainer {
+    val bridge: NativeAuthBridge = NativeAuthBridge()
     val repository: AuthRepository = AuthRepositoryImpl(bridge)
 
     val signInUseCase: SignInUseCase = SignInUseCase(repository)

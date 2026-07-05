@@ -23,20 +23,22 @@ public class AuthSdk private constructor(internal val container: SdkContainer) {
         private var instance: AuthSdk? = null
 
         /**
-         * Initializes the SDK with a platform-specific NativeAuthBridge.
+         * Initializes the SDK.
          */
-        public fun initialize(bridge: NativeAuthBridge) {
+        public fun initialize() {
             if (instance == null) {
-                instance = AuthSdk(SdkContainer(bridge))
+                instance = AuthSdk(SdkContainer())
             }
         }
 
         /**
          * Returns the initialized instance of AuthSdk.
-         * Throws [IllegalStateException] if the SDK has not been initialized.
          */
         public fun getInstance(): AuthSdk {
-            return instance ?: throw IllegalStateException("AuthSdk has not been initialized. Call initialize() first.")
+            if (instance == null) {
+                initialize()
+            }
+            return instance!!
         }
 
         /**

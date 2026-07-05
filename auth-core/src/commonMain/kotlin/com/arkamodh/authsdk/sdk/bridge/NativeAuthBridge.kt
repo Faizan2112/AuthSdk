@@ -3,9 +3,9 @@ package com.arkamodh.authsdk.sdk.bridge
 import com.arkamodh.authsdk.sdk.model.AuthProvider
 
 /**
- * Interface that platforms (Android / iOS) implement to delegate their Firebase Auth operations.
+ * Platform-specific class designed to delegate Firebase Auth operations natively.
  */
-public interface NativeAuthBridge {
+public expect class NativeAuthBridge() {
     public fun signIn(
         email: String,
         password: String,
@@ -40,6 +40,4 @@ public interface NativeAuthBridge {
         email: String,
         completion: (Throwable?) -> Unit
     )
-
-    public fun signInWithGoogle(completion: (NativeAuthResult?, Throwable?) -> Unit)
 }

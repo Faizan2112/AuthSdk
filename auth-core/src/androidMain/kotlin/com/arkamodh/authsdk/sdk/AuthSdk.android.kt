@@ -10,16 +10,10 @@ import com.google.firebase.auth.FirebaseAuth
  * This automatically resolves the application context to prevent Activity/context memory leaks,
  * grabs the default [FirebaseAuth] instance, and registers it.
  */
+internal lateinit var sdkContext: Context
+
 public fun AuthSdk.Companion.initialize(context: Context) {
-    // Prevent memory leaks by extracting applicationContext
-    val appContext = context.applicationContext
-    try {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        initialize(AndroidAuthBridge(appContext, firebaseAuth))
-    } catch (e: Exception) {
-        println("AuthSdk: Firebase Auth failed to initialize (likely due to missing google-services.json): ${e.message}. Falling back to SandboxAuthBridge.")
-        // Fallback to SandboxAuthBridge so the app can run out-of-the-box in demo mode
-        initialize(com.arkamodh.authsdk.sdk.bridge.SandboxAuthBridge())
-    }
+    sdkContext = context.applicationContext
+    initialize()
 }
 

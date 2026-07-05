@@ -6,7 +6,7 @@ import com.arkamodh.authsdk.sdk.model.*
  * A bridge implementation that simulates Firebase Auth in memory.
  * Useful for local sandbox development, preview modes, and testing.
  */
-public class SandboxAuthBridge : NativeAuthBridge {
+public class SandboxAuthBridge : NativeAuthBridgeDelegate {
     private var currentUser: NativeAuthUser? = null
     private val listeners = mutableListOf<(NativeAuthUser?) -> Unit>()
 
@@ -99,12 +99,6 @@ public class SandboxAuthBridge : NativeAuthBridge {
         } else {
             completion(null)
         }
-    }
-
-    override fun signInWithGoogle(completion: (NativeAuthResult?, Throwable?) -> Unit) {
-        currentUser = SandboxUser("sandbox-google-123", "google@sandbox.com", "Sandbox Google User", true)
-        notifyListeners()
-        completion(SandboxResult(currentUser), null)
     }
 
     private fun notifyListeners() {
