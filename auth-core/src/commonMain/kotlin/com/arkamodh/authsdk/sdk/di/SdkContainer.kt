@@ -19,4 +19,5 @@ internal class SdkContainer(bridge: NativeAuthBridge) {
     val observeAuthStateUseCase: ObserveAuthStateUseCase = ObserveAuthStateUseCase(repository)
     val signInWithCredentialUseCase: SignInWithCredentialUseCase = SignInWithCredentialUseCase(repository)
     val getIdTokenUseCase: GetIdTokenUseCase = GetIdTokenUseCase(repository)
+    val signInWithGoogleUseCase: SignInWithGoogleUseCase = SignInWithGoogleUseCase(repository)
 }

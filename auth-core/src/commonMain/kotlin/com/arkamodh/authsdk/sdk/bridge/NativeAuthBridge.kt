@@ -40,4 +40,6 @@ public interface NativeAuthBridge {
         email: String,
         completion: (Throwable?) -> Unit
     )
+
+    public fun signInWithGoogle(completion: (NativeAuthResult?, Throwable?) -> Unit)
 }

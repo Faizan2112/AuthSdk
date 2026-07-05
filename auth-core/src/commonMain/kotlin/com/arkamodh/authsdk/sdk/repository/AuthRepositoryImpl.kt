@@ -105,6 +105,16 @@ internal class AuthRepositoryImpl(
         }
     }
 
+    override suspend fun signInWithGoogle(): AuthResult = suspendCancellableCoroutine { continuation ->
+        bridge.signInWithGoogle { result, error ->
+            if (error != null) {
+                continuation.resumeWithException(mapError(error))
+            } else {
+                continuation.resume(AuthResult(mapUser(result?.user)))
+            }
+        }
+    }
+
     private fun mapError(error: Throwable): Throwable {
         return if (error is AuthException) {
             error

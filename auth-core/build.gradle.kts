@@ -51,6 +51,7 @@ kotlin {
         androidMain.dependencies {
             implementation(dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.auth)
+            implementation(libs.play.services.auth)
         }
     }
 }

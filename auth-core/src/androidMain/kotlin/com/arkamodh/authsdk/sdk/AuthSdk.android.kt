@@ -15,7 +15,7 @@ public fun AuthSdk.Companion.initialize(context: Context) {
     val appContext = context.applicationContext
     try {
         val firebaseAuth = FirebaseAuth.getInstance()
-        initialize(AndroidAuthBridge(firebaseAuth))
+        initialize(AndroidAuthBridge(appContext, firebaseAuth))
     } catch (e: Exception) {
         println("AuthSdk: Firebase Auth failed to initialize (likely due to missing google-services.json): ${e.message}. Falling back to SandboxAuthBridge.")
         // Fallback to SandboxAuthBridge so the app can run out-of-the-box in demo mode

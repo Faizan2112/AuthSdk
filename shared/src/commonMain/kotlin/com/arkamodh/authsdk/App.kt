@@ -303,11 +303,13 @@ fun App() {
                                             isLoading = true
                                             errorMessage = null
                                             try {
-                                                AuthSdk.getInstance().signInWithCredential(
-                                                    AuthProvider.GOOGLE, "mock-google-id-token"
-                                                )
-                                                infoMessage = "Signed in with Google (Sandbox)!"
+                                                println("App.kt: Initiating AuthSdk signInWithGoogle()...")
+                                                val result = AuthSdk.getInstance().signInWithGoogle()
+                                                println("App.kt: Google Sign-in successful. User UID: ${result.user?.uid}, Email: ${result.user?.email}")
+                                                infoMessage = "Signed in with Google!"
                                             } catch (e: Exception) {
+                                                println("App.kt: Google Sign-in error: ${e.message}")
+                                                e.printStackTrace()
                                                 errorMessage = e.message
                                             } finally {
                                                 isLoading = false

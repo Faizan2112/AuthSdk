@@ -101,6 +101,12 @@ public class SandboxAuthBridge : NativeAuthBridge {
         }
     }
 
+    override fun signInWithGoogle(completion: (NativeAuthResult?, Throwable?) -> Unit) {
+        currentUser = SandboxUser("sandbox-google-123", "google@sandbox.com", "Sandbox Google User", true)
+        notifyListeners()
+        completion(SandboxResult(currentUser), null)
+    }
+
     private fun notifyListeners() {
         listeners.forEach { it(currentUser) }
     }

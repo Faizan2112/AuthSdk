@@ -17,6 +17,7 @@ public class AuthSdk private constructor(internal val container: SdkContainer) {
     public val observeAuthState: ObserveAuthStateUseCase get() = container.observeAuthStateUseCase
     public val signInWithCredential: SignInWithCredentialUseCase get() = container.signInWithCredentialUseCase
     public val getIdToken: GetIdTokenUseCase get() = container.getIdTokenUseCase
+    public val signInWithGoogle: SignInWithGoogleUseCase get() = container.signInWithGoogleUseCase
 
     public companion object {
         private var instance: AuthSdk? = null
